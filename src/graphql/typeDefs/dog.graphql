@@ -1,0 +1,69 @@
+
+input Dog_Match {
+  user: String
+  name: String
+  type: String
+}
+input Dog_Search {
+  field: Dog_Match
+  method: Search! = exact
+}
+
+#################################
+
+enum Dog_Sort {
+  name
+  type
+}
+input Dog_Ordering {
+  field: Dog_Sort
+  method: Order! = string
+  direction: Direction! = ASC
+}
+
+#################################
+
+type Dog_Connection {
+  edges:[Dog_Edge]
+}
+
+type Dog_Edge{
+  cursor: Cursor!
+  node: Dog_Node
+}
+
+#################################
+
+type Dog_Node {
+  user: String
+  name: String
+  type: String
+}
+
+#################################
+
+input Dog_Schema {
+  name: String!
+  type: String
+  age: Int
+  color: String
+  sock: Dog_Sock_Enum
+}
+
+enum Dog_Sock_Enum {
+  ankle
+  crew
+  knee
+  thigh
+}
+
+#################################
+
+type Dog_Mutation {
+  create(data: Dog_Schema):Dog_Edge
+  update(id:String!, data: Dog_Schema):Dog_Edge
+}
+
+type Dog_Query {
+  find(take:Int skip:Int order:[Dog_Ordering] search:[Dog_Search]):Dog_Connection
+}

@@ -1,0 +1,69 @@
+
+input Cat_Match {
+  user: String
+  name: String
+  type: String
+}
+input Cat_Search {
+  field: Cat_Match
+  method: Search! = exact
+}
+
+#################################
+
+enum Cat_Sort {
+  name
+  type
+}
+input Cat_Ordering {
+  field: Cat_Sort
+  method: Order! = string
+  direction: Direction! = ASC
+}
+
+#################################
+
+type Cat_Connection {
+  edges:[Cat_Edge]
+}
+
+type Cat_Edge {
+  cursor: Cursor!
+  node: Cat_Node
+}
+
+#################################
+
+type Cat_Node {
+  user: String
+  name: String
+  type: String
+}
+
+#################################
+
+input Cat_Schema {
+  name: String!
+  type: String
+  age: Int
+  color: String
+  hat: Cat_Hat_Enum
+}
+
+enum Cat_Hat_Enum {
+  tophat
+  cap
+  beanie
+  fedora
+}
+
+#################################
+
+type Cat_Mutation {
+  create(data: Cat_Schema):Cat_Edge
+  update(id:String!, data: Cat_Schema):Cat_Edge
+}
+
+type Cat_Query {
+  find(take:Int skip:Int order:[Cat_Ordering] search:[Cat_Search]):Cat_Connection
+}

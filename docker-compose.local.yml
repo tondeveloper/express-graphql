@@ -1,0 +1,15 @@
+
+#DOCKER COMPOSE FILE FOR TESTING/DEV LOCAL - YOU WILL NEED A .env FILE
+#WITH ENV THAT THE APP WILL USE
+version: '2'
+services:
+  api:
+    build:
+      context: .
+    command: npm start
+    env_file:
+      - .env
+    expose:
+      - '3000'
+    ports:
+      - '3000:3000'

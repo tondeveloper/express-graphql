@@ -1,0 +1,32 @@
+type Query
+type Mutation
+#type Subscription
+
+#################################
+
+type Meta {
+  start: Int
+  count: Int
+}
+
+type Cursor {
+  id: String!
+  type: String!
+}
+
+enum Direction {
+  ASC
+  DESC
+}
+
+enum Search {
+  exact
+  fuzzy
+  none
+}
+
+enum Order {
+  int
+  date
+  string
+}

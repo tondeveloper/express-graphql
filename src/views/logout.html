@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </head>
+    <script>
+
+      function submit(e){
+        e.preventDefault();
+        fetch('/api/auth/logout', {
+          method: 'POST',
+          body: JSON.stringify({}),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          window.location.href='/login'
+        })
+        .catch(error => {
+          console.log(error)
+          document.getElementById('error-400').style.display = 'block'
+        })
+      }
+      function init(){
+        document.getElementById('form').onsubmit = submit;
+      }
+      window.onload = init;
+    </script>
+    <style>
+     #form > * {
+      margin-right:10px;
+     }
+    </style>
+    <body>
+      <form id="form" style="display:flex">
+        <button type="submit">Log out</button>
+        <div id="error-400" style="display:none">Could not logout</div>
+      </form>
+    </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </head>
+    <script>
+      const data = {
+        username:'',
+        password:''
+      }
+      const update = (field)=> (e) =>{
+        data[field] = e.target.value
+      }
+      function submit(e){
+        e.preventDefault();
+        fetch('/api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(data),
+          headers:{
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          if(res.status === 200){
+            data['username']=''
+            data['password']=''
+            window.location.href = '/api/graphql'
+          }else if(res.status === 401){
+            document.getElementById('error-401').style.display = 'block'
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          document.getElementById('error-400').style.display = 'block'
+        })
+      }
+      function init(){
+        document.getElementById('form').onsubmit = submit;
+        document.getElementById('field-username').onchange = update('username');
+        document.getElementById('field-password').onchange = update('password');
+      }
+      window.onload = init;
+    </script>
+    <style>
+     #form > * {
+      margin-right:10px;
+     }
+    </style>
+    <body>
+      <form id="form" style="display:flex">
+        <span>Username</span>
+        <input id="field-username" type="text"/>
+        <span>Password</span>
+        <input id="field-password" type="password"/>
+        <button type="submit">Submit</button>
+        <div id="error-401" style="display:none">Incorrect Credentials</div>
+        <div id="error-400" style="display:none">Auth Server Error</div>
+      </form>
+    </body>
+</html>

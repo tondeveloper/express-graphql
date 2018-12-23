@@ -1,0 +1,27 @@
+
+extend type Query {
+  Pets: Pet_Query
+}
+
+type Pet_Query {
+  Dog:Dog_Query
+  Cat:Cat_Query
+}
+
+
+#################################
+
+
+extend type Mutation {
+  Pets: Pet_Mutation
+}
+
+type Pet_Mutation {
+  Dog:Dog_Mutation
+  Cat:Cat_Mutation
+}
+
+
+
+
+
